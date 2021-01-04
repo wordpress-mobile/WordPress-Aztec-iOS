@@ -254,7 +254,7 @@ private extension LayoutManager {
         var effectiveLineRange = NSRange.zero
 
         // Since only the first line in a paragraph can have a bullet, we only need the first line fragment.
-        let lineFragmentRect = self.lineFragmentRect(forGlyphAt: range.location, effectiveRange: &effectiveLineRange)
+        let lineFragmentUsedRect = self.lineFragmentUsedRect(forGlyphAt: range.location, effectiveRange: &effectiveLineRange)
 
         // Whenever we're rendering an Item with multiple lines, within a Blockquote, we need to account for the
         // paragraph spacing. Otherwise the Marker will show up slightly off.
@@ -265,7 +265,7 @@ private extension LayoutManager {
             paddingY = Metrics.paragraphSpacing
         }
 
-        return lineFragmentRect.offsetBy(dx: origin.x, dy: origin.y + paddingY)
+        return CGRect(origin: CGPoint(x: origin.x, y: origin.y + lineFragmentUsedRect.origin.y + paddingY), size: lineFragmentUsedRect.size)
     }
 
 
@@ -284,14 +284,12 @@ private extension LayoutManager {
         let markerAttributes = markerAttributesBasedOnParagraph(attributes: paragraphAttributes)
         let markerAttributedText = NSAttributedString(string: markerText, attributes: markerAttributes)
 
-        var yOffset = CGFloat(0)
+        let markerWidth = markerAttributedText.size().width * 1.5
+        let markerHeight = markerAttributedText.size().height
+        let yOffset = CGFloat(rect.size.height / 2.0 - markerHeight / 2.0)
         var xOffset = CGFloat(0)
         let indentWidth = style.indentToLast(TextList.self)
-        let markerWidth = markerAttributedText.size().width * 1.5
 
-        if location > 0 {
-            yOffset += style.paragraphSpacingBefore
-        }
         // If the marker width is larger than the indent available let's offset the area to draw to the left
         if markerWidth > indentWidth {
             xOffset = indentWidth - markerWidth
@@ -300,6 +298,7 @@ private extension LayoutManager {
         var markerRect = rect.offsetBy(dx: xOffset, dy: yOffset)
 
         markerRect.size.width = max(indentWidth, markerWidth)
+        markerRect.size.height = markerHeight
 
         markerAttributedText.draw(in: markerRect)
     }
