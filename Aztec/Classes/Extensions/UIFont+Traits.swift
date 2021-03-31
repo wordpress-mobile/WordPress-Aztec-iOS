@@ -30,6 +30,15 @@ extension UIFont {
             // This is a very viable scenario, and our default handling mechanism for it is to
             // return the original, unmodified font.
             //
+            
+            // MARK: Fix oblique type for Chinese
+            if newTraits.contains(.traitItalic) && familyDescriptor.postscriptName.hasPrefix(".PingFangSC") {
+                newTraits.remove(.traitItalic)
+                if let newDescriptor = familyDescriptor.withSymbolicTraits(newTraits) {
+                    return UIFont(descriptor: newDescriptor, size: pointSize)
+                }
+            }
+            
             return self
         }
 
