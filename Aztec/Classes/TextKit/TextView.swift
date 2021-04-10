@@ -628,7 +628,7 @@ open class TextView: UITextView {
         
         
         
-        let formatter = BlockquoteFormatter(placeholderAttributes: typingAttributes, increaseDepth: true)
+        let formatter = BlockquoteFormatter(typingAttributes: typingAttributes, defaultTextAttributes: defaultAttributes, borderColors: blockquoteBorderColors, increaseDepth: true)
         let targetRange = formatter.applicationRange(for: selectedRange, in: storage)
 
         performUndoable(at: targetRange) {
@@ -1076,7 +1076,7 @@ open class TextView: UITextView {
     open func toggleBlockquote(range: NSRange) {
         ensureInsertionOfEndOfLineForEmptyParagraphAtEndOfFile(forApplicationRange: range)
 
-        let formatter = BlockquoteFormatter(placeholderAttributes: typingAttributes)
+        let formatter = BlockquoteFormatter(typingAttributes: typingAttributes, defaultTextAttributes: defaultAttributes, borderColors: blockquoteBorderColors)
         
         toggle(formatter: formatter, atRange: range)
         
@@ -1905,7 +1905,7 @@ private extension TextView {
     ///
     private func removeBlockquoteAndCite() {
         // Blockquote + cite removal
-        let formatter = BlockquoteFormatter(placeholderAttributes: typingAttributes)
+        let formatter = BlockquoteFormatter(typingAttributes: typingAttributes)
         let citeFormatter = CiteFormatter()
         
         if formatter.present(in: typingAttributes)
@@ -2034,6 +2034,7 @@ private extension TextView {
         }
         
         typingAttributes[.paragraphStyle] = paragraphStyleWithoutProperties(from: paragraphStyle)
+        typingAttributes[.foregroundColor] = defaultTextColor
     }
     
     private func removeParagraphPropertiesFromParagraph(spanning range: NSRange) {
@@ -2045,6 +2046,7 @@ private extension TextView {
         }
         
         attributes[.paragraphStyle] = paragraphStyleWithoutProperties(from: paragraphStyle)
+        attributes[.foregroundColor] = defaultTextColor
         
         storage.setAttributes(attributes, range: range)
     }
