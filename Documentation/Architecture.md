@@ -41,7 +41,7 @@ Another essential task is interaction with user input and handling new lines, de
  - Paragraphs
 
 The following "ensure..." methods handle all these scenarios:
- - ['ensureRemovalOfParagraphAttributesWhenPressingEnterInAnEmptyParagraph'](https://github.com/wordpress-mobile/AztecEditor-iOS/blob/develop/Aztec/Classes/TextKit/TextView.swift#L1945)
+ - [ensureRemovalOfParagraphAttributesWhenPressingEnterInAnEmptyParagraph](https://github.com/wordpress-mobile/AztecEditor-iOS/blob/develop/Aztec/Classes/TextKit/TextView.swift#L1945)
  - [ensureInsertionOfEndOfLine](https://github.com/wordpress-mobile/AztecEditor-iOS/blob/develop/Aztec/Classes/TextKit/TextView.swift#L697)
  - [evaluateRemovalOfSingleLineParagraphAttributesAfterSelectionChange](https://github.com/wordpress-mobile/AztecEditor-iOS/blob/develop/Aztec/Classes/TextKit/TextView.swift#L1884)
 
@@ -82,7 +82,7 @@ The specialized `NSAttributedString` has custom attributes that add extra inform
 Specialized [Converter](https://github.com/wordpress-mobile/AztecEditor-iOS/blob/develop/Aztec/Classes/Converters/ElementsToAttributedString/Implementations/GenericElementConverter.swift) classes transform from HTML Elements to NSAttributedString text and attributes, for example:
  - [ImageElementConverter](https://github.com/wordpress-mobile/AztecEditor-iOS/blob/develop/Aztec/Classes/Converters/ElementsToAttributedString/Implementations/ImageElementConverter.swift) converts `img `elements to a custom attachment, 
  - [GenericElementConverter](https://github.com/wordpress-mobile/AztecEditor-iOS/blob/develop/Aztec/Classes/Converters/ElementsToAttributedString/Implementations/GenericElementConverter.swift) transform `strong` elements to a font attribute
- - [LIElementConverter](https://github.com/wordpress-mobile/AztecEditor-iOS/blob/develop/Aztec/Classes/Converters/ElementsToAttributedString/Implementations/GenericElementConverter.swift) transform `li` elements from a list to `ParagrahStyle`
+ - [LIElementConverter](https://github.com/wordpress-mobile/AztecEditor-iOS/blob/develop/Aztec/Classes/Converters/ElementsToAttributedString/Implementations/LIElementConverter.swift) transform `li` elements from a list to `ParagrahStyle`
  
 # Converting NSAttributedString to HTML
 
